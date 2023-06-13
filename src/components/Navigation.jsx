@@ -29,6 +29,12 @@ export default function Navigation() {
             {/*Box hider navmenuen i mobil xs er en mediaQuiery */}
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               {/* Her indsættes vores menuelementer */}
+              <Link className={styles.navStyleBtn1} href="/myPage">
+                min side
+              </Link>
+            </Box>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {/* Her indsættes vores menuelementer */}
               <Link className={styles.navStyleBtn1} href="/program">
                 PROGRAM
               </Link>
@@ -66,6 +72,11 @@ export default function Navigation() {
           <Divider></Divider>
           {/* Her indsættes vores menuelementer */}
           <List>
+          <ListItem>
+              <Link className={styles.navStyleBtn2} href="/myPage">
+                min side
+              </Link>
+            </ListItem>
             <ListItem>
               <Link className={styles.navStyleBtn2} href="/program">
                 PROGRAM
