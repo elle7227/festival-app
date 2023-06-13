@@ -8,23 +8,23 @@ export function ScheduleCardJOTU({
   handleCloseModal,
 }) {
   const [currentDay, setCurrentDay] = useState("mon"); // Initial day
-  //makes sure that if either showModal or selectedTent is false, the modal window doesn't get shown
+
+  //hvis enten showModal eller selctedTent er tilsvarende deres state (false og nul) renderes modal ikke.
   if (!showModal || !selectedTent) {
     return null;
   }
+
   function handleDayChange(day) {
     setCurrentDay(day);
   }
 
   function renderScene(day) {
     return scheduleData.Jotunheim[day]
+    //.filter metoden til: hvis IKKE scenenavnet(act) = break, viser vi navnet når vi mapper gennem.
       .filter((scene) => scene.act !== "break")
+      //mapper gennem scheduleData for valgte dag på jotuheim scenen og viser data for start, slut og act.
       .map((scene) => (
-        <section
-          className={styles.navnTidContainer}
-          key={scene.start}
-          value={scene.end}
-        >
+        <section className={styles.navnTidContainer} key={scene.start}value={scene.end}>
           <p className={styles.scene_modal_tidspunkt}>
             {scene.start} <br /> {scene.end}
           </p>

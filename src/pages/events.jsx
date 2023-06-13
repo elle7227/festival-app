@@ -9,6 +9,7 @@ export default function Events() {
 
   const handleReadMore = () => {
     setShowLongText(!showLongText);
+    //sætter button teksten til det modstte af hvad den er
     setButtonText(showLongText ? 'Read More' : 'Read Less');
   };
 

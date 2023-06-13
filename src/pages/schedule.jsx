@@ -90,7 +90,7 @@ const columns = [
     align: "right",
   },
 ];
-
+//laver en liste af objekter som hedder det samme som columns id (tidspunkter)
 function createData(time00, time02, time04, time06, time08, time10, time12, time14, time16, time18, time20, time22) {
   return {
     time00,
@@ -151,10 +151,12 @@ export default function StickyHeadTable({ schedule }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  
+  //bruges ikke - kan fjernes
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  //bruges ikke - kan fjernes
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);

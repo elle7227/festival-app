@@ -15,6 +15,7 @@ export default function FestivalMap({ scheduleData }) {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const containerWidth = 180;
 
+  //prøver at placere teltene ifht window.
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -26,6 +27,8 @@ export default function FestivalMap({ scheduleData }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+
   
   //funktion der kører ved klik på telt og sætter tent værdi alt efter hvilket img vi klikker på + sætter setShowModal = true 
   function handleTentClick(tent) {
@@ -36,13 +39,14 @@ export default function FestivalMap({ scheduleData }) {
   function handleMouseOver(index) {
     setHoveredImg(index);
   }
+
   function handleMouseOut() {
     setHoveredImg(null);
   }
   function getImageStyle(index) {
     const scale = hoveredImg === index ? 1.2 : 1;
 
-    // Define custom sizes and positions for each image
+    // Define custom sizes and positions for each image - kunne slettes
     const imageStyles = {
       1: {
         width: windowWidth * 0.3,
@@ -60,7 +64,6 @@ export default function FestivalMap({ scheduleData }) {
         
       },
     };
-
     const imageStyle = imageStyles[index];
 
     return {

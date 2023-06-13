@@ -50,7 +50,47 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
             <br /> {bandInfo.bio}
           </p>
         </article>
+        <button
+          className={styles.favoritButton}
+          onClick={() => makeFavorit()}>favorite
+        </button>
       </section>
     </div>
   );
+
+  function makeFavorit() {
+    const newWine = {
+      name: act, // Assuming `act` contains the artist name
+    };
+
+    fetch("https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+        apikey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdndWZzcHdqYmRwem15cXltaWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5MTkzNjcsImV4cCI6MTk5NTQ5NTM2N30.OszSJm-lZ8YMuK32u4ZmLBGGhl5BzkB8ieK_XUEVY04",
+      },
+      body: JSON.stringify(newWine),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Artist favorited:", data);
+        // Perform any additional actions upon successful favoriting
+      });
+  
+
+  return (
+    <div className={styles.modal_artister_body}>
+      {/* ... */}
+      <button
+        className={styles.favoritButton}
+        onClick={makeFavorit}
+      >
+        Favorite
+      </button>
+    </div>
+  );
 }
+}
+

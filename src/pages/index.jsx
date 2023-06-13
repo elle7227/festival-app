@@ -23,7 +23,7 @@ export function Overskrift() {
 }
 
 /*giver tekster der skal animeres en class "fadeIN" 
-og sætter elements til at være alle elementer med denne class*/
+og sætter elements til at være alle elementer med denne class gør at teksten på forsiden fader in*/
 
 export default function Home({ bandData }) {
   useEffect(() => {
@@ -32,6 +32,7 @@ export default function Home({ bandData }) {
 
     function fadeInHandler() {
       fadeInElements.forEach((element) => {
+        //fortæller hvor elemnet stopper (fylder)
         const elementPosition = element.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
 
@@ -66,7 +67,7 @@ export async function getServerSideProps() {
 
   // mapper igennem hver array alt efter hvilket endpoint det er og fetcher
   const apiRequest = apiEndpoints.map((endpoint) => fetch(endpoint));
-  // Promise.all venter på alle apiRequest er kørt igennem før den går videre.
+  // Promise.all venter på alle apiRequest er kørt igennem før den går videre (ikke nødvendig der fetches kun fra 1 api)
   const [bandRes] = await Promise.all(apiRequest);
 
   const bandData = await bandRes.json();
