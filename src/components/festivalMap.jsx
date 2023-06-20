@@ -8,15 +8,15 @@ import Footer from "@/components/footer";
 
 export default function FestivalMap({ scheduleData }) {
   const [hoveredImg, setHoveredImg] = useState(null);
-
   const [selectedTent, setSelectedTent] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  //variabler til placering af telte
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const containerWidth = 180;
 
   //prøver at placere teltene ifht window.
-  useEffect(() => {
+  /*useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       setWindowHeight(window.innerHeight);
@@ -26,7 +26,7 @@ export default function FestivalMap({ scheduleData }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, []);*/
 
 
   
@@ -39,14 +39,13 @@ export default function FestivalMap({ scheduleData }) {
   function handleMouseOver(index) {
     setHoveredImg(index);
   }
-
   function handleMouseOut() {
     setHoveredImg(null);
   }
+
   function getImageStyle(index) {
     const scale = hoveredImg === index ? 1.2 : 1;
-
-    // Define custom sizes and positions for each image - kunne slettes
+    // Define custom sizes and positions for each image
     const imageStyles = {
       1: {
         width: windowWidth * 0.3,
@@ -76,7 +75,7 @@ export default function FestivalMap({ scheduleData }) {
     };
   }
 
-  //vores return statemnet i festivalMap funktionen tjekker showmodal værdi og selectedTent værdi
+  //er showmodal true og selctedtent == xxx gør xxx
   return (
     <>
       {showModal ? (
@@ -103,6 +102,7 @@ export default function FestivalMap({ scheduleData }) {
           />
         )
       ) : (
+        //når show modal false eller selctedtent ikke = telt der findes 
         <div className={styles.mapDiv}>
           <div className={styles.map_top}>
           <Navigation></Navigation>
