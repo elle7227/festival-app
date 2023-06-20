@@ -30,7 +30,7 @@ export default function Navigation() {
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               {/* Her indsættes vores menuelementer */}
               <Link className={styles.navStyleBtn1} href="/myPage">
-                min side
+                FAVORITES
               </Link>
             </Box>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
@@ -74,7 +74,7 @@ export default function Navigation() {
           <List>
           <ListItem>
               <Link className={styles.navStyleBtn2} href="/myPage">
-                min side
+                FAVORITES
               </Link>
             </ListItem>
             <ListItem>

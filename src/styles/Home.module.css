@@ -327,6 +327,42 @@ padding: 1rem;
   
 
 
+/*MIN SIDE*/
+.deleteArtist{
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    margin-right: 20px;
+}
+.favoritKolonne{
+    display: flex;
+    align-items: start; 
+    place-content: start space-between;
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
+    border-bottom: 1px solid black;
+    margin-bottom: 2%;
+}
+.favoritKolonne p{
+    margin-top: -6%;
+    margin-left: 10px;
+}
+.favoritKolonne h3{
+    margin-left: 10px;
+}
+
+
+.minSide_Body h1{
+    margin-bottom: 4rem;
+    margin-top: 2rem;
+}
+.minSide_Body{
+    background: rgb(82,182,232);
+    background: linear-gradient(0deg, rgba(82,182,232,1) 15%, rgba(244,222,64,1) 74%);
+}
+
+
+
 
 
 

@@ -6,12 +6,16 @@ import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/footer";
 
+
 export default function Program({ scheduleData, bandData }) {
-  // const [stage, setStage] = useState("Monday");
   const [selectedBand, setSelectedBand] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // callback function that is called when a band event is clicked. It takes the selected bandEvent as a parameter.
+  // callback funktion der kaldes når bandEvent klikkes (klikker på et bandnvan). tager selectedBand som parameter
+  //sætter variable for stage som bandevents der spilles pågældenen dag på valgte secne. sætter staten udfra dette
+  //.flter metoden filtrere bandevents på betingelse at artistnvan-act i array == navn på valgt artist.
+  //.length giver længden af array og ? fortæller om længende er større end 0, og hvis ja sætter staten til navn på scene.
+  //hvis array er kortere end 0 sættes state til false.
   function handleBandSelection(bandEvent, day) {
     let stage = scheduleData.Jotunheim[day].filter((act) => act.act === bandEvent.act).length ? "Jotunheim" : false;
     if (!stage) {
@@ -20,17 +24,20 @@ export default function Program({ scheduleData, bandData }) {
     if (!stage) {
       stage = scheduleData.Vanaheim[day].filter((act) => act.act === bandEvent.act).length ? "Vanaheim" : false;
     }
-
+    //finder info om bandet (dag, scnene og bandInfo) ved at finde tilsvarende bandnavn (act) i bandInfo array
     let bandInfo = bandData.find((band) => band.name === bandEvent.act);
+    //funktionen setselctedband opdaterer Selectedband staten med info fra bandData.
     setSelectedBand({
       ...bandEvent,
       day,
       stage,
       bandInfo,
     });
+    //sætter state til true, så modal vises.
     setShowModal(true);
   }
 
+  
   const Midmon = scheduleData.Midgard.mon;
   const Midtue = scheduleData.Midgard.tue;
   const Midwed = scheduleData.Midgard.wed;
@@ -65,33 +72,37 @@ export default function Program({ scheduleData, bandData }) {
       <Head>
         <title>Program</title>
       </Head>
+
       <Modal selectedBand={selectedBand} showModal={showModal} handleCloseModal={setShowModal} />
       {/* program site wraped inside a conditional rendering */}
-      {/* checks if showModal is false using the logical NOT operator - if true, the content within the parentheses will be rendered. */}
+      {/* tjekker om showmodal er ændret fra state false, som sat tidliger. hvis ja vises indholdet */}
       {!showModal && (
         <section className={stylesProgram.programBackground}>
           <h1 className={stylesProgram.programHeading}>Program</h1>
           <Link className={stylesProgram.link} href="/schedule">
             / Schedule
           </Link>
+
+    
           <section className={stylesProgram.programContainer}>
             <h2>Monday</h2>
-
+            {/*.concat kombinerer bandevents fra de 3 scener og laver nyt array. .map mapper gennem denne liste*/}
             {Midmon.concat(Jotmon, Vanmon).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
-                // Skip rendering the band event if it includes "break"
+                // viser ikke band event hvis act indeholder "break" 
                 return null;
               }
               return (
+                //viser bandnavne og kalder handleBandSelection med parameter bandEvent og mon. key definerer hvert element i liste.
                 <p className={stylesProgram.programText} key={bandEvent.act} onClick={() => handleBandSelection(bandEvent, "mon")}>
                   <span>{" " + bandEvent.act}</span> /
                 </p>
               );
             })}
           </section>
+
           <section className={stylesProgram.programContainer}>
             <h2>Tuesday</h2>
-
             {Midtue.concat(Jottue, Vantue).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
                 // Skip rendering the band event if it includes "break"
@@ -104,9 +115,9 @@ export default function Program({ scheduleData, bandData }) {
               );
             })}
           </section>
+
           <section className={stylesProgram.programContainer}>
             <h2>Wednesday</h2>
-
             {Midwed.concat(Jotwed, Vanwed).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
                 // Skip rendering the band event if it includes "break"
@@ -119,9 +130,9 @@ export default function Program({ scheduleData, bandData }) {
               );
             })}
           </section>
+
           <section className={stylesProgram.programContainer}>
             <h2>Thursday</h2>
-
             {Midthu.concat(Jotmon, Vanmon).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
                 // Skip rendering the band event if it includes "break"
@@ -134,6 +145,7 @@ export default function Program({ scheduleData, bandData }) {
               );
             })}
           </section>
+
           <section className={stylesProgram.programContainer}>
             <h2>Friday</h2>
             {Midfri.concat(Jotfri, Vanfri).map((bandEvent) => {
@@ -148,9 +160,9 @@ export default function Program({ scheduleData, bandData }) {
               );
             })}
           </section>
+
           <section className={stylesProgram.programContainer}>
             <h2>Saturday</h2>
-
             {Midsat.concat(Jotmon, Vanmon).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
                 // Skip rendering the band event if it includes "break"
@@ -165,7 +177,6 @@ export default function Program({ scheduleData, bandData }) {
           </section>
           <section className={stylesProgram.programContainer}>
             <h2>Sunday</h2>
-
             {Midsun.concat(Jotsun, Vansun).map((bandEvent) => {
               if (bandEvent.act.includes("break")) {
                 // Skip rendering the band event if it includes "break"
@@ -178,21 +189,14 @@ export default function Program({ scheduleData, bandData }) {
               );
             })}
           </section>
+
         </section>
       )}
       <Footer></Footer>
     </section>
   );
 }
-// export async function getServerSideProps() {
-//   const api = "http://localhost:8080/schedule";
-//   const res = await fetch(api);
-//   const data = await res.json();
-//   console.log(data);
-//   return {
-//     props: { schedule: data },
-//   };
-// }
+
 
 export async function getServerSideProps() {
   //const apiEndpoints = ["http://localhost:8080/bands", "http://localhost:8080/schedule"];

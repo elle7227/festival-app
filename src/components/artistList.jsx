@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import styles from "@/styles/Home.module.css";
+
 
 export function ArtistFavoritter (){
-    //sætter en state variablen artist som et tomt array, og opdateres af functionen setArtist.
+    //state variablen artist sættes som et tomt array
   const [artists, setArtist] = useState([]);
 
-//fetcher fra wines table fordi jeg har brugt gammel table i supabase
-// bruger useEffect til at fetche data fra api når component er renderet (vist på side).
+
+//fetche data fra api når component er renderet
   useEffect(() => {
     const fetchArtister = async () => {
         const response = await fetch("https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines", {
@@ -18,45 +20,51 @@ export function ArtistFavoritter (){
         const data = await response.json();
         setArtist(data);
     };
-    //kalder fetch function -> fetcher data når component renderes.
+    //kører useEffect fetch functionen
     fetchArtister();
   }, []);
-  //array er sat som andet argument til useEffect -->kører 1 gang når component renders.
+  //kører 1 gang når component renders.
 
 
   
   function deleteArtist(id) {
-    //sender delete request til sepcifikt id på artist i API 
+    //delete request til sepcifikt id i API 
     fetch(
       `https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines?id=eq.${id}`,
       {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
+          //return en response = opdateret liste
           Prefer: "return=representation",
           apikey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdndWZzcHdqYmRwem15cXltaWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5MTkzNjcsImV4cCI6MTk5NTQ5NTM2N30.OszSJm-lZ8YMuK32u4ZmLBGGhl5BzkB8ieK_XUEVY04",
         },
       }
     )
-    //callback funktion der løber array igennem og fjerner slettede artister (database) fra viste array.
+    //callback-  konverterer response til json format
       .then((response) => response.json())
+      //tager fat i responsen eferfølgende
       .then((data) => {
-        // Update the artist state by removing the deleted wine
+        // Updatere artist staten ved, at flitrere tidligere state og laver nyt filtreret array.
         setArtist((prevArtists) => prevArtists.filter((artist) => artist.id !== id));
       });
   }
 
-//returnerer og viser den opdatrede liste af artister tilsavrende databasens + slet knap·
   return (
-    <main>
+    <section>
       {artists.map((artist) => (
-        <div key={artist.id}>
-          <h2>{artist.name}</h2>
-          <button className="delete" onClick={() => deleteArtist(artist.id)}>
-            Delete
-          </button>
-        </div>
+      <section className={styles.favoritKolonne} >
+        <div className={styles.navnWrapper}>
+          <h3>{artist.name}</h3>
+          <p>{artist.day}day</p>
+      </div>
+      <div>
+      <button className={styles.deleteArtist} onClick={() => deleteArtist(artist.id)}>
+        remove
+      </button>
+      </div>
+    </section>
       ))}
-    </main>
+  </section>
   );
 }

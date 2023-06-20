@@ -50,6 +50,16 @@
   color: rgb(255, 98, 0);
 }
 
+.favoritButton{
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+.hjerte{
+  stroke: black;
+  width: 35px;
+    }
 
 
 @media (max-width: 750px) {
@@ -82,17 +92,30 @@
     max-width: 800px;
   }
 
+
   .ModalConcertInfo{
-  display: flex;
-  gap: 1rem;
-  margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    place-content: start space-around;
+    margin-block: 25px;
+    align-items: center;
+  }
+
+  .ModalConcertInfo p{
+    font-size: 1.1rem;
+    margin: auto;
   }
 
   .modal_artister_dato{
-    margin-inline-end: -9px;
-    margin-inline-start: 10px;
     text-transform: uppercase;
-    
+    font-weight: bolder;
   }
+ 
+
+
+
+
+
 }
 

@@ -8,6 +8,7 @@ export default function Events() {
   const [buttonText, setButtonText] = useState('Read More');
 
   const handleReadMore = () => {
+    //kører setShowLongTekst funktionen når showLongTekst er andet end false (det vi satte med usestate)
     setShowLongText(!showLongText);
     //sætter button teksten til det modstte af hvad den er
     setButtonText(showLongText ? 'Read More' : 'Read Less');
