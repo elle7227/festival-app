@@ -16,7 +16,7 @@ export default function FestivalMap({ scheduleData }) {
   const containerWidth = 180;
 
   //prøver at placere teltene ifht window.
-  /*useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       setWindowHeight(window.innerHeight);
@@ -26,7 +26,7 @@ export default function FestivalMap({ scheduleData }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);*/
+  }, []);
 
 
   
