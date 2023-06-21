@@ -11,11 +11,12 @@ export default function Program({ scheduleData, bandData }) {
   const [selectedBand, setSelectedBand] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // callback funktion der kaldes når bandEvent klikkes (klikker på et bandnvan). tager selectedBand som parameter
+  // callback der kaldes når bandEvent klikkes tager bandEvent og day som parameter som stores data om bands.
   //sætter variable for stage som bandevents der spilles pågældenen dag på valgte secne. sætter staten udfra dette
   //.flter metoden filtrere bandevents på betingelse at artistnvan-act i array == navn på valgt artist.
   //.length giver længden af array og ? fortæller om længende er større end 0, og hvis ja sætter staten til navn på scene.
   //hvis array er kortere end 0 sættes state til false.
+  //
   function handleBandSelection(bandEvent, day) {
     let stage = scheduleData.Jotunheim[day].filter((act) => act.act === bandEvent.act).length ? "Jotunheim" : false;
     if (!stage) {
@@ -75,7 +76,7 @@ export default function Program({ scheduleData, bandData }) {
 
       <Modal selectedBand={selectedBand} showModal={showModal} handleCloseModal={setShowModal} />
       {/* program site wraped inside a conditional rendering */}
-      {/* tjekker om showmodal er ændret fra state false, som sat tidliger. hvis ja vises indholdet */}
+      {/* tjekker om showmodal er false, hvis ja vises indholdet i section */}
       {!showModal && (
         <section className={stylesProgram.programBackground}>
           <h1 className={stylesProgram.programHeading}>Program</h1>

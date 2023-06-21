@@ -91,8 +91,8 @@ export function ScheduleCardJOTU({
           Sunday
         </button>
       </div>
-
       <div className={styles.scene_modal_day}>{renderScene(currentDay)}</div>
     </div>
   );
 }
+//kalder renderscene - currentday som argument - viser scnenes program i div

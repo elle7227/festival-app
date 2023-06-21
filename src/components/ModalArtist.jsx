@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '@/styles/Modal.module.css';
 
 export default function Modal({ selectedBand, handleCloseModal, showModal }) {
-  //i program page er seledctedband og showmodal sat til null og false, hvis en har ændre state exit funktion
+  //i program page er seledctedband eller showmodal sat til null og false, hvis en har ændre state exit funktion
   if (!selectedBand || !showModal) {
     return null;
   }
@@ -17,23 +17,36 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
     : `https://nova-enchanted-confidence.glitch.me/logos/${bandInfo.logo}`;
 
 
-
   const [isFavorited, setIsFavorited] = useState(false);
-  
-  //useeffect tjekker om artist er favorit/ik når modal åbnes. for at gemme favorit state når siden renderes
+//fetcher data når modal renders - findes artist i response data (databasen)?
   useEffect(() => {
-  //parser fra local storage 
-    const favoritedArtists = JSON.parse(localStorage.getItem('favoritedArtists')) || [];
-    //setisfavorited sætter state for isfavorited - findes act i favoritedArtists array
-    // artist findes i array når modal åbnes, sættes setIsFavorited state til true
-    setIsFavorited(favoritedArtists.includes(act));
-}, []);
+    async function fetchFavorites () {
+      //await = data hentes ned før funktion fortsætter
+      //url referer til objektet med valgte act.
+        const response = await fetch(
+          `https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines?name=eq.${act}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdndWZzcHdqYmRwem15cXltaWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5MTkzNjcsImV4cCI6MTk5NTQ5NTM2N30.OszSJm-lZ8YMuK32u4ZmLBGGhl5BzkB8ieK_XUEVY04',
+            },
+          }
+        );
+        //parser response object som JSON og gemmer i "data"
+        const data = await response.json();
+
+  //hvis array længere end 0 = act findes --> setisfavorited(true)
+        setIsFavorited(data.length > 0);
+    };
+    fetchFavorites();
+    //useeffect kaldes når agt skifter
+  }, [act]);
 
 
   function makeFavorit() {
     setIsFavorited(true);
 
-//opretter nyt objekt sender med .post funktionen til rest api endpoint 
+//opretter nyt objekt sender med .post til rest api endpoint 
     const newFavorite = {
       name: act,
       day: day,
@@ -52,25 +65,11 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
     })
     //callabck når fetch kaldes. responsen json string --> til array.
       .then((response) => response.json())
-    
-     // parser string fra local storage ind i favoritedArtist som array
-        const favoritedArtists = JSON.parse(localStorage.getItem('favoritedArtists')) || [];
-        //opdaterer local storage fra favoritedartist. spreder objektet --> appender --> string
-        localStorage.setItem('favoritedArtists', JSON.stringify([...favoritedArtists, act]));
   }
   
    function removeFavorite() {
     setIsFavorited(false);
-     // parser string fra local storage ind i favoritedArtist som array
-     const favoritedArtists = JSON.parse(localStorage.getItem('favoritedArtists')) || [];
-
-    //filterer så artist ikke == act, laver nyt filtreret array --> string
-    //setItem gemmer updaterede string i localStorage
-    localStorage.setItem(
-      'favoritedArtists',
-      JSON.stringify(favoritedArtists.filter((artist) => artist !== act))
-    );
-
+     
     //sender delete request til endpoint 
     fetch(
       `https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines?name=eq.${act}`,

@@ -9,7 +9,7 @@ export function ArtistFavoritter (){
 
 //fetche data fra api når component er renderet
   useEffect(() => {
-    const fetchArtister = async () => {
+    async function fetchArtister() {
         const response = await fetch("https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines", {
           method: "get",
           headers: {
@@ -19,11 +19,11 @@ export function ArtistFavoritter (){
         //henter data fra api endpoint med response.json metoden
         const data = await response.json();
         setArtist(data);
-    };
+    }
     //kører useEffect fetch functionen
     fetchArtister();
   }, []);
-  //kører 1 gang når component renders.
+ 
 
 
   
