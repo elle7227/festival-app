@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/Modal.module.css';
 
+
 export default function Modal({ selectedBand, handleCloseModal, showModal }) {
-  //i program page er seledctedband eller showmodal sat til null og false, hvis en har ændre state exit funktion
+  //kræver valgt et band + shoewmodal true 
   if (!selectedBand || !showModal) {
     return null;
   }
-
-//hvis kriterierne ovenover er opfyldt henter og definerer vi disse egenskaberne fra selctedBand objektet.
+//extracter variablerner fra selectedBand som individuelle variabler
   const { act, start, end, bandInfo, stage, day } = selectedBand;
 
   // tjekker om bandinfo.logo indeholder http, hvis ikke konstruerer vi en lokal url via glitch.
@@ -18,10 +18,10 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
 
 
   const [isFavorited, setIsFavorited] = useState(false);
-//fetcher data når modal renders - findes artist i response data (databasen)?
+
+//fetcher data når modal renders - findes artist i databasen?
   useEffect(() => {
     async function fetchFavorites () {
-      //await = data hentes ned før funktion fortsætter
       //url referer til objektet med valgte act.
         const response = await fetch(
           `https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines?name=eq.${act}`,
@@ -32,26 +32,24 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
             },
           }
         );
-        //parser response object som JSON og gemmer i "data"
         const data = await response.json();
 
-  //hvis array længere end 0 = act findes --> setisfavorited(true)
+  // array længere end 0 = act findes --> setisfavorited true
         setIsFavorited(data.length > 0);
     };
     fetchFavorites();
-    //useeffect kaldes når agt skifter
   }, [act]);
+
 
 
   function makeFavorit() {
     setIsFavorited(true);
-
-//opretter nyt objekt sender med .post til rest api endpoint 
+    //nyt objekt 
     const newFavorite = {
       name: act,
       day: day,
     };
-    // request til rest api endpoint 
+
     fetch('https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines', {
       method: 'post',
       headers: {
@@ -60,16 +58,15 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
         apikey:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdndWZzcHdqYmRwem15cXltaWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5MTkzNjcsImV4cCI6MTk5NTQ5NTM2N30.OszSJm-lZ8YMuK32u4ZmLBGGhl5BzkB8ieK_XUEVY04',
       },
-      //konverterer payload = newFavorite til JSON string - sættes som value til body
+      //object laves til JSON string - sættes body --> så det kan sendes 
       body: JSON.stringify(newFavorite),
     })
-    //callabck når fetch kaldes. responsen json string --> til array.
       .then((response) => response.json())
   }
   
-   function removeFavorite() {
+
+   function RemoveFavorite() {
     setIsFavorited(false);
-     
     //sender delete request til endpoint 
     fetch(
       `https://ggufspwjbdpzmyqymijq.supabase.co/rest/v1/wines?name=eq.${act}`,
@@ -114,7 +111,7 @@ export default function Modal({ selectedBand, handleCloseModal, showModal }) {
             <span> </span>
             {start} - {end}
           </p>
-          <button className={styles.favoritButton} onClick={isFavorited ? removeFavorite : makeFavorit}>
+          <button className={styles.favoritButton} onClick={isFavorited ? RemoveFavorite : makeFavorit}>
             <svg
               className={styles.hjerte}
               xmlns="http://www.w3.org/2000/svg"

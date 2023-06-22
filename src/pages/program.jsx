@@ -27,7 +27,9 @@ export default function Program({ scheduleData, bandData }) {
     }
     //finder info om bandet (dag, scnene og bandInfo) ved at finde tilsvarende bandnavn (act) i bandInfo array
     let bandInfo = bandData.find((band) => band.name === bandEvent.act);
-    //funktionen setselctedband opdaterer Selectedband staten med info fra bandData.
+
+   //sætter selctedBand ved at lave nye objekt med samme properties men nye values.
+    //(spreder properties fra tildligere bandEvent, og de representerer de nye values)
     setSelectedBand({
       ...bandEvent,
       day,

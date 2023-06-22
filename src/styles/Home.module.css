@@ -339,7 +339,6 @@ padding: 1rem;
     align-items: start; 
     place-content: start space-between;
     color: rgb(0, 0, 0);
-    font-size: 2rem;
     border-bottom: 1px solid black;
     margin-bottom: 2%;
 }
@@ -348,9 +347,10 @@ padding: 1rem;
     margin-left: 10px;
 }
 .favoritKolonne h3{
+    font-family: eurostile, sans-serif;
     margin-left: 10px;
+    font-size: 2rem;
 }
-
 
 .minSide_Body h1{
     margin-bottom: 4rem;
